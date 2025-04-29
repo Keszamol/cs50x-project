@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h1>Ready to reflect your Day?</h1>
+
+<border class="card">
+
+    <h2> Register </h2>
+    <form class="login" method="post">
+        <input class="login-field" placeholder="Username" autocomplete="off" type="text" name="username"><br>
+        <input class="login-field" placeholder="Password" autocomplete="off" type="text" name="password"><br>
+        <input placeholder="Confirm Password" autocomplete="off" type="text" id="confirmation" name="confirmation"><br><br>
+        <button type="submit" value="Register">Register</button>
+    </form>
+
+</border>
+
+{% endblock %}

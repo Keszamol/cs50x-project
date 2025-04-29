@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h1>Todo</h1>
+
+    <border class="card">
+        <h4>Beschreibung:</h4>
+        <li>Hier kannst du deine heutige Todo Liste sehen oder deine Todos für morgen planen.</li>
+        <li>Wähle einfach ein Datum aus um deine Todos zu sehen und zu erstellen.</li>
+    </border>
+
+    <form method="post" action="/todo" class="mb-4">
+        <label for="date">Select a date:</label>
+        <input type="date" name="selected_date" class="form-control" required>
+        <br>
+        <div class="d-flex justify-content-end">
+          <button name="action" value="show">Show Todo</button>
+        </div>
+    </form>
+
+    <border class="card">
+        <p>{{ display_date }}</p>
+        <h4>Todo:</h4>
+        <br>
+        <table class="table table-hover">
+            <thead>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Priority</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                <form method="post" action="/todo" class="mb-4">
+                    <input type="hidden" name="selected_date" value="{{ selected_date }}">
+                    <td><input class="todo-content" name="title" autocomplete="off" required></td>
+                    <td><input class="todo-content" name="description" autocomplete="off" required></td>
+                    <td><input class="todo-content" name="todo_date" type="date" autocomplete="off" required></td>
+                    <td>
+                      <select class="todo-content" name="priority">
+                        {% for PRIOR in prior %}
+                          <option value="{{ PRIOR }}">{{ PRIOR }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                    <td><button name="action" value="create">Create</button></td>
+                </form>
+            </tbody>
+        </table>
+
+        {% if todo %}
+        <form method="post" action="/todo" class="mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <th>Date</th>
+                    <th>Priority</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    {% for todo in todo %}
+                    <tr>
+                        <form method="POST" action="/todo" class="mb-4">
+                            <input type="hidden" name="selected_date" value="{{ selected_date }}">
+                            <input type="hidden" name="todo_id" value="{{ todo.id }}">
+                            <td>{{ display_date }}</td>
+                            <td>{{ todo.priority }}</td>
+                            <td>{{ todo.titel }}</td>
+                            <td>{{ todo.description }}</td>
+                            <td>
+                                <button name="action" value="delete">Delete</button>
+                                <button name="action" value="done">Done</button>
+                            </td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        {% endif %}
+
+    </border>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>My History</h1>
+
+    <form method="post" action="/history" class="mb-4">
+        <label for="date">Select a date:</label>
+        <input type="date" id="date" name="date" class="form-control" required>
+        <br>
+        <div class="d-flex justify-content-end">
+          <button>Show Entries</button>
+        </div>
+    </form>
+
+  {% if entry %}
+    <div class="card">
+        <p>{{ selected_date }}</p>
+        <h4>Your entry:</h4>
+        <br>
+
+        <table class="table table-bordered">
+          <h4>Overview of Mood</h4>
+          <thead>
+            <th>Work</th>
+            <th>Family</th>
+            <th>Friends</th>
+            <th>Selfcare</th>
+          </thead>
+          <tbody>
+            <td>{{ entry.mood_work }}</td>
+            <td>{{ entry.mood_family }}</td>
+            <td>{{ entry.mood_friends }}</td>
+            <td>{{ entry.mood_selfcare }}</td>
+          </tbody>
+        </table>
+
+        <br>
+
+        <table class="table table-bordered">
+          <h4>Gratitude and Highlights</h4>
+          <thead>
+            <th>Gratitude</th>
+            <th>Highlight</th>
+          </thead>
+          <tbody>
+            <td>{{ entry.gratitude }}</td>
+            <td>{{ entry.highlight }}</td>
+          </tbody>
+        </table>
+    </div>
+  {% elif searched %}
+  <div class="card">
+      <p>No entry found for {{ selected_date }}.</p>
+  </div>
+  {% endif %}
+{% endblock %}
+
+
