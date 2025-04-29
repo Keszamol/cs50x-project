@@ -208,3 +208,21 @@ def delete_todo(username, PRIOR, selected_date, user_id, todo_id):
     db.execute("DELETE FROM todos WHERE id = ? AND user_id = ?", todo_id, user_id)
 
     return show_todo(selected_date, PRIOR, username, user_id)
+
+
+@app.route("/statistic", methods=["GET", "POST"])
+def statistic():
+
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    user_id = session.get('user_id')
+    username = session.get('username', '')
+    PRIOR = ['Low', 'Normal', 'High']
+
+    return render_template("statistic.html", username=username)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
