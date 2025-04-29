@@ -41,7 +41,7 @@ Client (HTML/CSS/JS)  ↔  Flask Server (app.py)  ↔  SQLite (db/database.db)
 
 1. Repository klonen:
    ```bash
-   git clone https://github.com/<dein-username>/cs50x-project.git
+   git clone https://github.com/keszamol/cs50x-project.git
    cd cs50x-project
    ```
 2. Virtuelle Umgebung erstellen & aktivieren:
