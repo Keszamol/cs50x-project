@@ -12,7 +12,16 @@
 
     <border class="card">
 
-       
+        <form method="post" action="/statistic" class="mb-4">
+            <button name="action" value="three_days">3 Days</button>
+            <button name="action" value="7-days">7 Days</button>
+            <button name="action" value="14-days">14 Days</button>
+            <button name="action" value="30-days">30 Days</button>
+            <button name="action" value="alltime">Alltime</button>
+        </form>
+        {% if show_three_days %}
+            <h1>Übersicht der letzten 3 Tage</h1>
+        {% endif %}
 
     </border>
 

@@ -218,11 +218,21 @@ def statistic():
 
     user_id = session.get('user_id')
     username = session.get('username', '')
-    PRIOR = ['Low', 'Normal', 'High']
 
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+        if action == 'three_days':
+            return three_days(user_id, username)
+    
     return render_template("statistic.html", username=username)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+def three_days(user_id, username):
+    date = datetime.now().date()
+    mood_list = db.execute("SELECT * FROM entries WHERE user_id = ? and date = ?", user_id, date)
 
+    return render_template("statistic.html", username=username, show_three_days=True)
+
+
+    
