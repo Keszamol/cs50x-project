@@ -34,9 +34,9 @@
             <tbody>
                 <form method="post" action="/todo" class="mb-4">
                     <input type="hidden" name="selected_date" value="{{ selected_date }}">
-                    <td><input class="todo-content" name="title" autocomplete="off" required></td>
-                    <td><input class="todo-content" name="description" autocomplete="off" required></td>
-                    <td><input class="todo-content" name="todo_date" type="date" autocomplete="off" required></td>
+                    <td><input class="todo-content" name="title" autocomplete="off" ></td>
+                    <td><input class="todo-content" name="description" autocomplete="off" ></td>
+                    <td><input class="todo-content" name="todo_date" type="date" autocomplete="off" ></td>
                     <td>
                       <select class="todo-content" name="priority">
                         {% for PRIOR in prior %}

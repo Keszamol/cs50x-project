@@ -191,6 +191,12 @@ def create_todo(username, PRIOR, selected_date, user_id):
     todo_date = request.form.get('todo_date')
     priority = request.form.get('priority')
 
+    if not title or not description or not todo_date or not priority:
+        return render_template("error.html", message="You need to fill everything.")
+    
+    if priority not in PRIOR:
+        return render_template("error.html", message="Wrong priority.")
+
     db.execute("INSERT INTO todos (user_id, date, titel, description, priority) VALUES (?, ?, ?, ?, ?)",
         user_id, todo_date, title, description, priority)
 
