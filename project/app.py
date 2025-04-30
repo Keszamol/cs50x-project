@@ -61,6 +61,8 @@ def register():
         confirmation = request.form.get("confirmation")
         if not confirmation:
             return render_template("error.html", message="Please confirm your password")
+        elif confirmation != password:
+            return render_template("error.html", message="Password and confirmation not identical")
 
         try:
 
@@ -94,6 +96,11 @@ def daily():
 
     if not user_id:
         return redirect(url_for('login'))
+    
+    today = db.execute("SELECT date FROM entries WHERE date = DATE('now') AND user_id = ?", user_id)
+    
+    if today:
+        return render_template("daily.html", today=today, username=username)
 
     if request.method == "POST":
 

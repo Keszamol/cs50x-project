@@ -1,7 +1,11 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-
+        {% if today %}
+        <border class="card">
+                <h4>Eintrag für Heute gespeichert</h4><br>
+                <p>Hier gibt es heute nichts mehr zu tun. Komm morgen wieder und reflektiere über deinen Tag.</p>
+        {% else %}
         <h1>Daily - Track your mood!</h1>
 
         <form action="/daily" method="post">
@@ -59,5 +63,7 @@
                 </div>
 
         </form>
+        
+        {% endif %}
 
 {% endblock %}
