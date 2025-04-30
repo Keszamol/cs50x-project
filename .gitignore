@@ -1,0 +1,10 @@
+# Venv and temporary
+/project/venv/
+/project/__pycache__/
+*.pyc
+
+# Database
+/project/db/database.db
+
+# Konzept
+/project/Konzept.txt

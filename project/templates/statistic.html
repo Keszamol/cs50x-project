@@ -13,16 +13,30 @@
     <border class="card">
 
         <form method="post" action="/statistic" class="mb-4">
-            <button name="action" value="three_days">3 Days</button>
+            <button name="action" value="3-days">3 Days</button>
             <button name="action" value="7-days">7 Days</button>
             <button name="action" value="14-days">14 Days</button>
             <button name="action" value="30-days">30 Days</button>
             <button name="action" value="alltime">Alltime</button>
         </form>
-        {% if show_three_days %}
-            <h1>Übersicht der letzten 3 Tage</h1>
+        {% if show_average %}
+            <h4>Deine Durchschnittliche Stimmung:</h4><br>
+            <h5>{{ action }}</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <th>Work</th>
+                    <th>Family</th>
+                    <th>Friends</th>
+                    <th>Selfcare</th>
+                </thead>
+                <tbody>
+                    <td>{{ mood_work_average | round(2) }}</td>
+                    <td>{{ mood_family_average | round(2) }}</td>
+                    <td>{{ mood_friends_average | round(2) }}</td>
+                    <td>{{ mood_selfcare_average | round(2) }}</td>
+                </tbody>
+            </table>          
         {% endif %}
 
     </border>
-
 {% endblock %}

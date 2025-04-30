@@ -222,17 +222,215 @@ def statistic():
     if request.method == 'POST':
         action = request.form.get('action')
 
-        if action == 'three_days':
-            return three_days(user_id, username)
+        if action == 'alltime':
+            action = "Alltime"
+            return alltime(user_id, username, action=action)     
+        elif action == '30-days':
+            action = "30 Days"
+            return thirty_days(user_id, username, action=action)
+        elif action == '14-days':
+            action = "14 Days"
+            return fourteen_days(user_id, username, action=action)
+        elif action == '7-days':
+            action = "7 Days"
+            return seven_days(user_id, username, action=action)
+        elif action == '3-days':
+            action = "3 Days"
+            return three_days(user_id, username, action=action)
     
     return render_template("statistic.html", username=username)
 
 
-def three_days(user_id, username):
-    date = datetime.now().date()
-    mood_list = db.execute("SELECT * FROM entries WHERE user_id = ? and date = ?", user_id, date)
+def alltime(user_id, username, action):
 
-    return render_template("statistic.html", username=username, show_three_days=True)
+    sum_mood_work = db.execute("SELECT SUM(mood_work) AS mood_work_sum FROM entries WHERE user_id = ?", user_id)
+    mood_work_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ?", user_id)
+
+    mood_work_sum = sum_mood_work[0]["mood_work_sum"] if sum_mood_work[0]["mood_work_sum"] is not None else 0
+    mood_work_count = mood_work_count[0]["count"]
+
+    mood_work_average = mood_work_sum / mood_work_count
+
+    sum_mood_family = db.execute("SELECT SUM(mood_family) AS mood_family_sum FROM entries WHERE user_id = ?", user_id)
+    mood_family_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ?", user_id)
+
+    mood_family_sum = sum_mood_family[0]["mood_family_sum"] if sum_mood_family[0]["mood_family_sum"] is not None else 0
+    mood_family_count = mood_family_count[0]["count"]
+
+    mood_family_average = mood_family_sum / mood_family_count
+
+    sum_mood_friends = db.execute("SELECT SUM(mood_friends) AS mood_friends_sum FROM entries WHERE user_id = ?", user_id)
+    mood_friends_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ?", user_id)
+
+    mood_friends_sum = sum_mood_friends[0]["mood_friends_sum"] if sum_mood_friends[0]["mood_friends_sum"] is not None else 0
+    mood_friends_count = mood_friends_count[0]["count"]
+
+    mood_friends_average = mood_friends_sum / mood_friends_count
+
+    sum_mood_selfcare = db.execute("SELECT SUM(mood_selfcare) AS mood_selfcare_sum FROM entries WHERE user_id = ?", user_id)
+    mood_selfcare_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ?", user_id)
+
+    mood_selfcare_sum = sum_mood_selfcare[0]["mood_selfcare_sum"] if sum_mood_selfcare[0]["mood_selfcare_sum"] is not None else 0
+    mood_selfcare_count = mood_selfcare_count[0]["count"]
+
+    mood_selfcare_average = mood_selfcare_sum / mood_selfcare_count
+
+    return render_template("statistic.html", username=username, show_average=True, 
+                           mood_work_average=mood_work_average, mood_family_average=mood_family_average, 
+                           mood_friends_average=mood_friends_average, mood_selfcare_average=mood_selfcare_average, action=action)
 
 
-    
+def thirty_days(user_id, username, action):
+
+    sum_mood_work = db.execute("SELECT SUM(mood_work) AS mood_work_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+    mood_work_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+
+    mood_work_sum = sum_mood_work[0]["mood_work_sum"] if sum_mood_work[0]["mood_work_sum"] is not None else 0
+    mood_work_count = mood_work_count[0]["count"]
+
+    mood_work_average = mood_work_sum / mood_work_count
+
+    sum_mood_family = db.execute("SELECT SUM(mood_family) AS mood_family_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+    mood_family_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+
+    mood_family_sum = sum_mood_family[0]["mood_family_sum"] if sum_mood_family[0]["mood_family_sum"] is not None else 0
+    mood_family_count = mood_family_count[0]["count"]
+
+    mood_family_average = mood_family_sum / mood_family_count
+
+    sum_mood_friends = db.execute("SELECT SUM(mood_friends) AS mood_friends_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+    mood_friends_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+
+    mood_friends_sum = sum_mood_friends[0]["mood_friends_sum"] if sum_mood_friends[0]["mood_friends_sum"] is not None else 0
+    mood_friends_count = mood_friends_count[0]["count"]
+
+    mood_friends_average = mood_friends_sum / mood_friends_count
+
+    sum_mood_selfcare = db.execute("SELECT SUM(mood_selfcare) AS mood_selfcare_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+    mood_selfcare_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-30 days')", user_id)
+
+    mood_selfcare_sum = sum_mood_selfcare[0]["mood_selfcare_sum"] if sum_mood_selfcare[0]["mood_selfcare_sum"] is not None else 0
+    mood_selfcare_count = mood_selfcare_count[0]["count"]
+
+    mood_selfcare_average = mood_selfcare_sum / mood_selfcare_count
+
+    return render_template("statistic.html", username=username, show_average=True, 
+                           mood_work_average=mood_work_average, mood_family_average=mood_family_average, 
+                           mood_friends_average=mood_friends_average, mood_selfcare_average=mood_selfcare_average, action=action)
+
+
+def fourteen_days(user_id, username, action):
+
+    sum_mood_work = db.execute("SELECT SUM(mood_work) AS mood_work_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+    mood_work_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+
+    mood_work_sum = sum_mood_work[0]["mood_work_sum"] if sum_mood_work[0]["mood_work_sum"] is not None else 0
+    mood_work_count = mood_work_count[0]["count"]
+
+    mood_work_average = mood_work_sum / mood_work_count
+
+    sum_mood_family = db.execute("SELECT SUM(mood_family) AS mood_family_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+    mood_family_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+
+    mood_family_sum = sum_mood_family[0]["mood_family_sum"] if sum_mood_family[0]["mood_family_sum"] is not None else 0
+    mood_family_count = mood_family_count[0]["count"]
+
+    mood_family_average = mood_family_sum / mood_family_count
+
+    sum_mood_friends = db.execute("SELECT SUM(mood_friends) AS mood_friends_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+    mood_friends_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+
+    mood_friends_sum = sum_mood_friends[0]["mood_friends_sum"] if sum_mood_friends[0]["mood_friends_sum"] is not None else 0
+    mood_friends_count = mood_friends_count[0]["count"]
+
+    mood_friends_average = mood_friends_sum / mood_friends_count
+
+    sum_mood_selfcare = db.execute("SELECT SUM(mood_selfcare) AS mood_selfcare_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+    mood_selfcare_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-14 days')", user_id)
+
+    mood_selfcare_sum = sum_mood_selfcare[0]["mood_selfcare_sum"] if sum_mood_selfcare[0]["mood_selfcare_sum"] is not None else 0
+    mood_selfcare_count = mood_selfcare_count[0]["count"]
+
+    mood_selfcare_average = mood_selfcare_sum / mood_selfcare_count
+
+    return render_template("statistic.html", username=username, show_average=True, 
+                           mood_work_average=mood_work_average, mood_family_average=mood_family_average, 
+                           mood_friends_average=mood_friends_average, mood_selfcare_average=mood_selfcare_average, action=action)
+
+
+def seven_days(user_id, username, action):
+
+    sum_mood_work = db.execute("SELECT SUM(mood_work) AS mood_work_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+    mood_work_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+
+    mood_work_sum = sum_mood_work[0]["mood_work_sum"] if sum_mood_work[0]["mood_work_sum"] is not None else 0
+    mood_work_count = mood_work_count[0]["count"]
+
+    mood_work_average = mood_work_sum / mood_work_count
+
+    sum_mood_family = db.execute("SELECT SUM(mood_family) AS mood_family_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+    mood_family_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+
+    mood_family_sum = sum_mood_family[0]["mood_family_sum"] if sum_mood_family[0]["mood_family_sum"] is not None else 0
+    mood_family_count = mood_family_count[0]["count"]
+
+    mood_family_average = mood_family_sum / mood_family_count
+
+    sum_mood_friends = db.execute("SELECT SUM(mood_friends) AS mood_friends_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+    mood_friends_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+
+    mood_friends_sum = sum_mood_friends[0]["mood_friends_sum"] if sum_mood_friends[0]["mood_friends_sum"] is not None else 0
+    mood_friends_count = mood_friends_count[0]["count"]
+
+    mood_friends_average = mood_friends_sum / mood_friends_count
+
+    sum_mood_selfcare = db.execute("SELECT SUM(mood_selfcare) AS mood_selfcare_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+    mood_selfcare_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-7 days')", user_id)
+
+    mood_selfcare_sum = sum_mood_selfcare[0]["mood_selfcare_sum"] if sum_mood_selfcare[0]["mood_selfcare_sum"] is not None else 0
+    mood_selfcare_count = mood_selfcare_count[0]["count"]
+
+    mood_selfcare_average = mood_selfcare_sum / mood_selfcare_count
+
+    return render_template("statistic.html", username=username, show_average=True, 
+                           mood_work_average=mood_work_average, mood_family_average=mood_family_average, 
+                           mood_friends_average=mood_friends_average, mood_selfcare_average=mood_selfcare_average, action=action)
+
+
+def three_days(user_id, username, action):
+
+    sum_mood_work = db.execute("SELECT SUM(mood_work) AS mood_work_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+    mood_work_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+
+    mood_work_sum = sum_mood_work[0]["mood_work_sum"] if sum_mood_work[0]["mood_work_sum"] is not None else 0
+    mood_work_count = mood_work_count[0]["count"]
+
+    mood_work_average = mood_work_sum / mood_work_count
+
+    sum_mood_family = db.execute("SELECT SUM(mood_family) AS mood_family_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+    mood_family_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+
+    mood_family_sum = sum_mood_family[0]["mood_family_sum"] if sum_mood_family[0]["mood_family_sum"] is not None else 0
+    mood_family_count = mood_family_count[0]["count"]
+
+    mood_family_average = mood_family_sum / mood_family_count
+
+    sum_mood_friends = db.execute("SELECT SUM(mood_friends) AS mood_friends_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+    mood_friends_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+
+    mood_friends_sum = sum_mood_friends[0]["mood_friends_sum"] if sum_mood_friends[0]["mood_friends_sum"] is not None else 0
+    mood_friends_count = mood_friends_count[0]["count"]
+
+    mood_friends_average = mood_friends_sum / mood_friends_count
+
+    sum_mood_selfcare = db.execute("SELECT SUM(mood_selfcare) AS mood_selfcare_sum FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+    mood_selfcare_count = db.execute("SELECT COUNT(*) AS count FROM entries WHERE user_id = ? AND date >= DATE('now', '-3 days')", user_id)
+
+    mood_selfcare_sum = sum_mood_selfcare[0]["mood_selfcare_sum"] if sum_mood_selfcare[0]["mood_selfcare_sum"] is not None else 0
+    mood_selfcare_count = mood_selfcare_count[0]["count"]
+
+    mood_selfcare_average = mood_selfcare_sum / mood_selfcare_count
+
+    return render_template("statistic.html", username=username, show_average=True, 
+                           mood_work_average=mood_work_average, mood_family_average=mood_family_average, 
+                           mood_friends_average=mood_friends_average, mood_selfcare_average=mood_selfcare_average, action=action) 
