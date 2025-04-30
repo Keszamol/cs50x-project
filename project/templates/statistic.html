@@ -5,9 +5,9 @@
     <h1>Statistic</h1>
 
     <border class="card">
-        <h4>Beschreibung:</h4>
-        <li>Prüfe deinen durchschnittlichen Stimmungswert.</li>
-        <li>Klicke einfach auf einen Zeitraum.</li>
+        <h4>Description:</h4>
+        <li>Check your average mood score.</li>
+        <li>Simply click on a time period.</li>
     </border>
 
     <border class="card">
@@ -17,10 +17,10 @@
             <button name="action" value="7-days">7 Days</button>
             <button name="action" value="14-days">14 Days</button>
             <button name="action" value="30-days">30 Days</button>
-            <button name="action" value="alltime">Alltime</button>
+            <button name="action" value="alltime">All Time</button>
         </form>
         {% if show_average %}
-            <h4>Deine Durchschnittliche Stimmung:</h4><br>
+            <h4>Your Average Mood:</h4><br>
             <h5>{{ action }}</h5>
             <table class="table table-bordered">
                 <thead>
@@ -30,10 +30,10 @@
                     <th>Selfcare</th>
                 </thead>
                 <tbody>
-                    <td>{{ mood_work_average | round(2) }}</td>
-                    <td>{{ mood_family_average | round(2) }}</td>
-                    <td>{{ mood_friends_average | round(2) }}</td>
-                    <td>{{ mood_selfcare_average | round(2) }}</td>
+                    <td>{{ mood_work_average }}</td>
+                    <td>{{ mood_family_average }}</td>
+                    <td>{{ mood_friends_average }}</td>
+                    <td>{{ mood_selfcare_average }}</td>
                 </tbody>
             </table>          
         {% endif %}

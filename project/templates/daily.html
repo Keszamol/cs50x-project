@@ -3,58 +3,57 @@
 {% block body %}
         {% if today %}
         <border class="card">
-                <h4>Eintrag für Heute gespeichert</h4><br>
-                <p>Hier gibt es heute nichts mehr zu tun. Komm morgen wieder und reflektiere über deinen Tag.</p>
+                <h4>Entry for Today Saved</h4><br>
+                <p>There's nothing more to do today. Come back tomorrow to reflect on your day.</p>
         {% else %}
-        <h1>Daily - Track your mood!</h1>
+        <h1>Daily - Track Your Mood!</h1>
 
         <form action="/daily" method="post">
 
                 <border class="card">
                         <h4>Read Before Submitting:</h4>
-                        <li>You don't need to fill out everything, but you can only submit once.</li>
-                        <li>For instance, if you fill out your mood for the day but it wasn't a workday,
-                        so you have nothing to report for your work mood, you don't have to fill it out.</li>
-                        <li>Once submitted, you cannot change your entry at this point (feature to be implemented in the future).</li>
+                        <li>You don't need to fill out everything, but you can only submit once a day.</li>
+                        <li>If you report your mood for the day but it wasn’t a workday and you have nothing to report for your work mood, feel free to leave it blank.</li>
+                        <li>Once submitted, your entry cannot be changed (this feature will be added in the future).</li>
                 </border>
 
                 <border class="card">
                         <h4>Work: </h4>
-                        <p>How was your mood today regarding your work?</p>
-                        <p>Type a number from 1 to 10 (1=bad, 10=perfect)</p>
+                        <p>How was your mood today in relation to your work?</p>
+                        <p>Rate it from 1 to 10 (1 = bad, 10 = perfect)</p>
                         <input class="form-control" autocomplete="off" name="mood_work" type="number" min="1" max="10" placeholder="1–10"></input>
                 </border>
 
                 <border class="card">
                         <h4>Family: </h4>
-                        <p>How was your mood today regarding your family?</p>
-                        <p>Type a number from 1 to 10 (1=bad, 10=perfect)</p>
+                        <p>How was your mood today in relation to your family?</p>
+                        <p>Rate it from 1 to 10 (1 = bad, 10 = perfect)</p>
                         <input class="form-control" autocomplete="off" name="mood_family" type="number" min="1" max="10" placeholder="1–10"></input>
                 </border>
 
                 <border class="card">
                         <h4>Friends: </h4>
-                        <p>How was your mood today regarding your friends?</p>
-                        <p>Type a number from 1 to 10 (1=bad, 10=perfect)</p>
+                        <p>How was your mood today in relation to your friends?</p>
+                        <p>Rate it from 1 to 10 (1 = bad, 10 = perfect)</p>
                         <input class="form-control" autocomplete="off" name="mood_friends" type="number" min="1" max="10" placeholder="1–10"></input>
                 </border>
 
                 <border class="card">
                         <h4>Selfcare: </h4>
                         <p>How was your mood today regarding yourself?</p>
-                        <p>Type a number from 1 to 10 (1=bad, 10=perfect)</p>
+                        <p>Rate it from 1 to 10 (1 = bad, 10 = perfect)</p>
                         <input class="form-control" autocomplete="off" name="mood_selfcare" type="number" min="1" max="10" placeholder="1–10"></input>
                 </border>
 
                 <border class="card">
                         <h4>Gratitude:</h4>
-                        <p>List things you were grateful for today.</p>
+                        <p>List things you are grateful for today.</p>
                         <input class="form-control" autocomplete="off" name="gratitude" type="text" placeholder="What were you grateful for?"></input>
                 </border>
 
                 <border class="card">
                         <h4>Highlight of the Day:</h4>
-                        <p>List a nice moment from today.</p>
+                        <p>What was a nice moment from today?</p>
                         <input class="form-control" autocomplete="off" name="highlight" type="text" placeholder="Highlight of the day"></input>
                 </border>
 
