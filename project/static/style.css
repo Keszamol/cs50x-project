@@ -3,7 +3,7 @@ body {
     color: #2c3e50 !important;
 }
 
-sborder {
+border {
     border: 3px solid #2c3e50;
     border-radius: 8px;
     margin: 2px;
@@ -69,8 +69,3 @@ button:hover {
 .custom-navbar .nav-link:hover {
     color: #4a6377 !important;
 }
-
-/* .accent-green {
-    background-color: #88a096;
-    color: #ffffff;
-} */
