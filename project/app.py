@@ -167,7 +167,6 @@ def main():
 
 
 
-
 @app.route("/todo", methods=["GET", "POST"])
 def todo():
     if not session.get('user_id'):
@@ -191,9 +190,38 @@ def todo():
             return create_todo(username, PRIOR, selected_date, user_id)
         elif action in ('delete', 'done'):
             return delete_todo(username, PRIOR, selected_date, user_id, todo_id)
+        elif action == 'all':
+             return show_all(selected_date, PRIOR, username, user_id)
+        elif action == 'today':
+             return show_today(selected_date, PRIOR, username, user_id)
+        elif action == 'tomorrow':
+             return show_tomorrow(selected_date, PRIOR, username, user_id)
 
     return render_template("todo.html", username=username, prior=PRIOR, selected_date=selected_date)
 
+def show_today(selected_date, PRIOR, username, user_id):
+
+    display_date = "Today"
+
+    todo_list = db.execute("SELECT * FROM todos WHERE user_id = ? AND date = DATE('now')", user_id)
+
+    return render_template("todo.html", username=username, prior=PRIOR, todo=todo_list, selected_date=selected_date, display_date=display_date)
+
+def show_tomorrow(selected_date, PRIOR, username, user_id):
+
+    display_date = "Tomorrow"
+
+    todo_list = db.execute("SELECT * FROM todos WHERE user_id = ? AND date >= DATE('now', '-1 days')", user_id)
+
+    return render_template("todo.html", username=username, prior=PRIOR, todo=todo_list, selected_date=selected_date, display_date=display_date)
+
+def show_all(selected_date, PRIOR, username, user_id):
+
+    display_date = "All Todo"
+
+    todo_list = db.execute("SELECT * FROM todos WHERE user_id = ?", user_id)
+
+    return render_template("todo.html", username=username, prior=PRIOR, todo=todo_list, selected_date=selected_date, display_date=display_date)
 
 def show_todo(selected_date, PRIOR, username, user_id):
 

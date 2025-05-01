@@ -15,11 +15,13 @@
     <div class="card">
         <form method="post" action="/todo" class="mb-4">
             <label for="date">Select a date:</label>
-            <input type="date" name="selected_date" class="form-control" required>
+            <input type="date" name="selected_date" class="form-control">
             <br>
-            <div class="d-flex justify-content-end">
-                <button name="action" value="show">Show Todo</button>
-            </div>
+            <button name="action" value="show">Selected Date</button>     
+            <button name="action" value="today">Today</button>
+            <button name="action" value="tomorrow">Tomorrow</button>
+            <button name="action" value="all">All</button>
+
         </form> 
 
         <h5>{{ display_date }}</h5>
@@ -75,7 +77,7 @@
                         <tr>
                             <input type="hidden" name="selected_date" value="{{ selected_date }}">
                             <input type="hidden" name="todo_id" value="{{ todo.id }}">
-                            <td>{{ display_date }}</td>
+                            <td>{{ todo.date }}</td>
                             <td>{{ todo.priority }}</td>
                             <td>{{ todo.titel }}</td>
                             <td>{{ todo.description }}</td>
