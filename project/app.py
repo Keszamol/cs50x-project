@@ -36,7 +36,7 @@ def login():
             if check_password_hash(user['password'], password):
                 session['user_id'] = user['user_id']
                 session['username'] = user['username']
-                return redirect(url_for('daily'))
+                return redirect(url_for('main'))
             else:
                 return render_template("error.html", message="Invalid Password")
         else:
@@ -152,6 +152,19 @@ def history():
             return render_template("history.html", entry=None, searched=True, username=username, selected_date=selected_date)
 
     return render_template("history.html", username=username, selected_date=selected_date)
+
+
+
+@app.route("/main")
+def main():
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    user_id = session.get('user_id')
+    username = session.get('username', '')
+
+    return render_template("main.html", username=username)
+
 
 
 
