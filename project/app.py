@@ -121,7 +121,7 @@ def daily():
 
         db.execute("INSERT INTO entries (user_id, date, mood_work, mood_family, mood_friends, mood_selfcare, gratitude, highlight) VALUES (?, date('now'), ?, ?, ?, ?, ?, ?)", user_id, mood_work, mood_family, mood_friends, mood_selfcare, gratitude, highlight)
 
-        flash("Eintrag erfolgreich gespeichert!")
+        flash("Entry saved succesfully!")
         return redirect(url_for('daily'))
 
     return render_template("daily.html", username=username)
