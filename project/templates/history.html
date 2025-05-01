@@ -3,6 +3,14 @@
 {% block body %}
     <h1>My History</h1>
 
+    <border class="card">
+      <h4>Description:</h4>
+      <li>Here you can click on the corresponding date to view your past entries.</li>
+      <li>Simply select a date to view your entries for that day.</li>
+    </border>
+  
+
+    <border class="card">
     <form method="post" action="/history" class="mb-4">
         <label for="date">Select a date:</label>
         <input type="date" id="date" name="date" class="form-control" required>
@@ -11,10 +19,8 @@
           <button>Show Entries</button>
         </div>
     </form>
-
   {% if entry %}
-    <div class="card">
-        <p>{{ selected_date }}</p>
+        <h5>{{ selected_date }}</h5>
         <h4>Your Entry:</h4>
         <br>
 
@@ -47,10 +53,8 @@
             <td>{{ entry.highlight }}</td>
           </tbody>
         </table>
-    </div>
   {% elif searched %}
-  <div class="card">
       <p>No entry found for {{ selected_date }}.</p>
-  </div>
+  </border>
   {% endif %}
 {% endblock %}

@@ -10,6 +10,7 @@
         <li>Simply select a date to view and create your todos.</li>
     </border>
 
+    <border class="card">
     <form method="post" action="/todo" class="mb-4">
         <label for="date">Select a date:</label>
         <input type="date" name="selected_date" class="form-control" required>
@@ -17,12 +18,10 @@
         <div class="d-flex justify-content-end">
           <button name="action" value="show">Show Todo</button>
         </div>
-    </form>
-
-    <border class="card">
-        <p>{{ display_date }}</p>
-        <h4>Todo:</h4>
-        <br>
+    </form> 
+        <h5>{{ display_date }}</h5>
+        <h4>Todo:</h4><br>
+        
         <table class="table table-hover">
             <thead>
                 <th>Title</th>
