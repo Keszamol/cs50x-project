@@ -211,7 +211,7 @@ def show_tomorrow(selected_date, PRIOR, username, user_id):
 
     display_date = "Tomorrow"
 
-    todo_list = db.execute("SELECT * FROM todos WHERE user_id = ? AND date >= DATE('now', '-1 days')", user_id)
+    todo_list = db.execute("SELECT * FROM todos WHERE user_id = ? AND date >= DATE('now') AND DATE(date) < DATE('now', '+2 day')", user_id)
 
     return render_template("todo.html", username=username, prior=PRIOR, todo=todo_list, selected_date=selected_date, display_date=display_date)
 
