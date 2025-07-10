@@ -24,7 +24,6 @@ Dieses Repository enthält mein Abschlussprojekt für den CS50x-Kurs: **„Mindf
 ## 🟠 Updates / Pläne
 
 - Projekt optimieren (Start: 30.06.2025)
-- Tool ausschließlich für die Stimmung verwenden, Todo Listen werden entfernt. Ich möchte ein Tool das sich ausschließlich auf eine Sache fokussiert und dieses durch regelmäßige neue learnings optimieren.
 ---
 
 ## 🏗️ Architektur
