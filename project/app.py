@@ -109,15 +109,18 @@ def daily():
 
     if request.method == "POST":
 
-        mood_work = request.form.get("mood_work")
-        mood_family = request.form.get("mood_family")
-        mood_friends = request.form.get("mood_friends")
-        mood_selfcare = request.form.get("mood_selfcare")
+        mood_work = float(request.form.get("mood_work"))
+        mood_family = float(request.form.get("mood_family"))
+        mood_friends = float(request.form.get("mood_friends"))
+        mood_selfcare = float(request.form.get("mood_selfcare"))
         gratitude = request.form.get("gratitude")
         highlight = request.form.get("highlight")
 
         if not mood_work and not mood_family and not mood_friends and not mood_selfcare and not gratitude and not highlight:
             return render_template("error.html", message="You need to input something.")
+        
+        if mood_work < 1 or mood_work > 10 or mood_family < 1 or mood_family > 10 or mood_friends < 1 or mood_friends > 10 or mood_selfcare < 1 or mood_selfcare > 10:
+            return render_template("error.html", message="Dein Wert darf nur auf einer Skala von 1-10 liegen.")
 
         db.execute("INSERT INTO entries (user_id, date, mood_work, mood_family, mood_friends, mood_selfcare, gratitude, highlight) VALUES (?, date('now'), ?, ?, ?, ?, ?, ?)", user_id, mood_work, mood_family, mood_friends, mood_selfcare, gratitude, highlight)
 
