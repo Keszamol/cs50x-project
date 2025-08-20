@@ -27,16 +27,5 @@ cursor.execute('''
     )
 ''')
 
-# Todo Table
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS todos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER,
-        date TEXT,
-        priority INTEGER,
-        titel TEXT,
-        description TEXT
-    )
-''')
 conn.commit()
 conn.close()
