@@ -1,5 +1,5 @@
 from cs50 import SQL
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 import pytz
