@@ -29,6 +29,17 @@
                 </div>
             </nav>
             <br>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flashes">
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
             <br>
             {% block body %}{% endblock %}
             <br><br>

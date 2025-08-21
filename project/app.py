@@ -1,5 +1,5 @@
 from cs50 import SQL
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 import pytz
@@ -22,11 +22,13 @@ def login():
 
         username = request.form.get("username")
         if not username:
-            return render_template("error.html", message="Missing Username")
+            flash("Insert a Username", "alert alert-error")
+            return render_template("login.html")
 
         password = request.form.get("password")
         if not password:
-            return render_template("error.html", message="Missing Password")
+            flash("Insert a Password", "alert alert-error")
+            return render_template("login.html")
 
         user = db.execute("SELECT * FROM users WHERE username = ?", (username,))
 
@@ -38,9 +40,11 @@ def login():
                 session['username'] = user['username']
                 return redirect(url_for('main'))
             else:
-                return render_template("error.html", message="Invalid Password")
+                flash("Invalid Password", "alert alert-error")
+                return render_template("login.html")
         else:
-            return render_template("error.html", message="Username does not exist")
+            flash("Username does not exist", "alert alert-error")
+            return render_template("login.html")
 
 
 
@@ -53,17 +57,21 @@ def register():
 
         username = request.form.get("username")
         if not username:
-            return render_template("error.html", message="Missing Username")
+            flash("Missing Username", "alert alert-error")
+            return render_template("register.html")
 
         password = request.form.get("password")
         if not password:
-            return render_template("error.html", message="Missing Password")
+            flash("Missing Password", "alert alert-error")
+            return render_template("register.html")
 
         confirmation = request.form.get("confirmation")
         if not confirmation:
-            return render_template("error.html", message="Please confirm your password")
+            flash("Confirm your Password", "alert alert-error")
+            return render_template("register.html")
         elif confirmation != password:
-            return render_template("error.html", message="Password and confirmation not identical")
+            flash("Password and confirmation not identical", "alert alert-error")
+            return render_template("register.html")
 
         try:
 
@@ -71,10 +79,11 @@ def register():
         except ValueError as e:
 
             if "UNIQUE constraint failed" in str(e):
-                return render_template("error.html", message="Username already exists")
+                flash("Username already exists", "alert alert-error")
+                return render_template("register.html")
             else:
-
-                return render_template("error.html", message="An unexpected error occurred")
+                flash("An unexpected error occurred", "alert alert-error")
+                return render_template("register.html")
 
         return redirect(url_for('login'))
 
@@ -117,14 +126,15 @@ def daily():
         highlight = request.form.get("highlight")
 
         if not mood_work and not mood_family and not mood_friends and not mood_selfcare and not gratitude and not highlight:
-            return render_template("error.html", message="You need to input something.")
+            flash("You need to input something", "alert alert-error")
+            return render_template("daily.html")
         
         if mood_work < 1 or mood_work > 10 or mood_family < 1 or mood_family > 10 or mood_friends < 1 or mood_friends > 10 or mood_selfcare < 1 or mood_selfcare > 10:
-            return render_template("error.html", message="Dein Wert darf nur auf einer Skala von 1-10 liegen.")
+            flash("Your score can only be on a scale of 1-10", "alert alert-error")
+            return render_template("daily.html")
 
         db.execute("INSERT INTO entries (user_id, date, mood_work, mood_family, mood_friends, mood_selfcare, gratitude, highlight) VALUES (?, date('now'), ?, ?, ?, ?, ?, ?)", user_id, mood_work, mood_family, mood_friends, mood_selfcare, gratitude, highlight)
 
-        flash("Entry saved succesfully!")
         return redirect(url_for('daily'))
 
     return render_template("daily.html", username=username)
